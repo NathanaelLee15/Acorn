@@ -14,6 +14,7 @@ git pull C:/Users/%USERNAME%/repos/acorn-plugins
 echo setting user env ACORN_PATH
 @REM use /m for system-wide
 setx ACORN_PATH C:/Users/%USERNAME%/repos/Acorn
+set ACORN_PATH=C:/Users/%USERNAME%/repos/Acorn
 
 echo adding Acorn/bin to PATH
 echo %PATH%|findstr "%ACORN_PATH%/bin" >nul
