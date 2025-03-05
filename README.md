@@ -2,7 +2,7 @@
 
 ## Getting Started
 - Dependencies
-    - [curl](https://github.com/curl/curl?tab=readme-ov-file) or [wget](https://www.gnu.org/software/wget)
+    - [curl](https://github.com/curl/curl?tab=readme-ov-file) <!-- or [wget](https://www.gnu.org/software/wget) -->
     - [git](https://git-scm.com/downloads)
     - [php](https://www.php.net/releases/8.3/en.php)
     - [node.js/npm](https://nodejs.org/en/download)
@@ -10,8 +10,8 @@
     - [main](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.bat) `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.bat | cmd`
     - [dev](https://github.com/NathanaelLee15/Acorn/blob/dev/scripts/quick_install.bat)  `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.bat | cmd`
 - Nix
-    - [main](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.sh) `curl -sSL https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.sh | bash`
-    - [dev](https://github.com/NathanaelLee15/Acorn/blob/dev/scripts/quick_install.sh)  `curl -sSL https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.sh | bash`
+    - [main](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.sh) `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.sh | bash`
+    - [dev](https://github.com/NathanaelLee15/Acorn/blob/dev/scripts/quick_install.sh)  `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.sh | bash`
 - add `.../Users/You/repos/Acorn/bin` to your path
 - set up your project env
 - run `acorn` in your project
