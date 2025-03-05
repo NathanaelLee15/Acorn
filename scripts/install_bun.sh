@@ -1,1 +1,1 @@
-npm install -g bun
+sudo npm install -g bun
