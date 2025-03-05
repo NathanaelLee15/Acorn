@@ -1,12 +1,12 @@
 # acorn
 
 ## Getting Started
-- Windows [quick_install](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.bat) script
-    - main `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.bat | cmd`
-    - dev  `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.bat | cmd`
-- Nix [quick_install](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.sh) script
-    - main `curl -sSL https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.sh | bash`
-    - dev  `curl -sSL https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.sh | bash`
+- Windows
+    - [main](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.bat) `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.bat | cmd`
+    - [dev](https://github.com/NathanaelLee15/Acorn/blob/dev/scripts/quick_install.bat)  `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.bat | cmd`
+- Nix
+    - [main](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.sh) `curl -sSL https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.sh | bash`
+    - [dev](https://github.com/NathanaelLee15/Acorn/blob/dev/scripts/quick_install.sh)  `curl -sSL https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.sh | bash`
 - add `.../Users/You/repos/Acorn/bin` to your path
 - set up your project
 - run `acorn` in your project
