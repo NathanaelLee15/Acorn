@@ -1,0 +1,1 @@
+bun run "$ACORN_PATH/index.ts" $@
