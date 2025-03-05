@@ -15,18 +15,19 @@ export ACORN_PATH="$HOME/repos/Acorn"
 
 echo "adding Acorn/bin to PATH:  $HOME/repos/Acorn/bin"
 export PATH="$PATH;$HOME/repos/Acorn/bin"
-echo $PATH
+echo "$PATH"
 
-# # cd to Acorn
-# cd %ACORN_PATH%
+cd $ACORN_PATH
 
-# echo installing bun
-# call scripts/install_bun.sh
+echo "installing bun"
+chmod +x ./scripts/install_bun.sh
+./scripts/install_bun.sh
 
-# echo running bun install
-# call bun i
+echo "running bun install"
+bun install
 
-# echo bootstrapping repo
-# call scripts/bootstrap.sh
+echo "bootstrapping repo"
+chmod +x ./scripts/bootstrap.sh
+./scripts/bootstrap.sh
 
-# code .
+code .
