@@ -1,0 +1,11 @@
+{
+    "name": "Acorn",
+    "deps": [
+        "example-dev"
+    ],
+    "plugins": {
+        "git": [
+            "make_git_commit_message"
+        ]
+    }
+}

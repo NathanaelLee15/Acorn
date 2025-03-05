@@ -1,0 +1,23 @@
+{
+  "name": "acorn",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run ./index.ts",
+    "start": "./scripts/compile.bat && ./bin/acorn-dev.exe",
+    "compile": "./scripts/compile.bat",
+    "deploy": "./scripts/deploy.bat"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@types/figlet": "^1.7.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "figlet": "^1.8.0"
+  }
+}
