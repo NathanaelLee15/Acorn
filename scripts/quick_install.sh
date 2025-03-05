@@ -24,18 +24,18 @@ cd $ACORN_PATH
 git pull
 
 echo "installing bun"
-if [ -f ./scripts/install_bun.sh ]; then
-    chmod +x ./scripts/install_bun.sh
-    ./scripts/install_bun.sh
-fi
+# if [ -f ./scripts/install_bun.sh ]; then
+sudo chmod +x ./scripts/install_bun.sh
+./scripts/install_bun.sh
+# fi
 
 echo "running bun install"
-bun install
+sudo bun install
 
 echo "bootstrapping repo"
-if [ -f ./scripts/bootstrap.sh ]; then
-    chmod +x ./scripts/bootstrap.sh
-    ./scripts/bootstrap.sh
-fi
+# if [ -f ./scripts/bootstrap.sh ]; then
+sudo chmod +x ./scripts/bootstrap.sh
+./scripts/bootstrap.sh
+# fi
 
 code .
