@@ -6,6 +6,8 @@
     - [git](https://git-scm.com/downloads)
     - [php](https://www.php.net/releases/8.3/en.php)
     - [node.js/npm](https://nodejs.org/en/download)
+    - optional [code](https://code.visualstudio.com/)
+        - running the installer will open code .../Acorn/
 - Windows
     - after installing add `.../Users/You/repos/Acorn/bin` to your path
     - [main](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.bat) `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.bat | cmd`
