@@ -2,8 +2,8 @@
 
 ## Getting Started
 - use [quick_install](https://github.com/NathanaelLee15/Acorn/blob/main/scripts/quick_install.bat) script
-    - run `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.bat | cmd
-`
+    - main `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/main/scripts/quick_install.bat | cmd`
+    - dev  `curl -s https://raw.githubusercontent.com/NathanaelLee15/Acorn/refs/heads/dev/scripts/quick_install.bat | cmd`
 - set up your project
 - run `acorn` in your project
 
