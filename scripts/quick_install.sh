@@ -11,7 +11,7 @@ git clone https://github.com/NathanaelLee15/acorn-plugins.git $HOME/repos/acorn-
 git pull "$HOME/repos/acorn-plugins"
 
 echo "setting ACORN_PATH:  $HOME/repos/Acorn"
-export ACORN_PATH=$HOME/repos/Acorn
+export ACORN_PATH="$HOME/repos/Acorn"
 
 echo "adding Acorn/bin to PATH:  $HOME/repos/Acorn/bin"
 export PATH="$PATH;$HOME/repos/Acorn/bin"
