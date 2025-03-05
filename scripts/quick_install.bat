@@ -17,7 +17,7 @@ setx ACORN_PATH C:/Users/%USERNAME%/repos/Acorn
 set ACORN_PATH=C:/Users/%USERNAME%/repos/Acorn
 
 echo adding Acorn/bin to PATH
-echo %PATH%|findstr "Acorn" >nul || set PATH=%PATH%;%ACORN_PATH%/bin
+echo %PATH%|findstr "Acorn" >nul || setx PATH %PATH%;%ACORN_PATH%/bin
 
 @REM cd to Acorn
 cd %ACORN_PATH%
