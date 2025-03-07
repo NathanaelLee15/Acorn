@@ -141,7 +141,7 @@ export async function processInput(textInput:string) {
         }
     }
     // else just use the input
-    catch (error) {
+    catch (_) {
         res = textInput
     }
 
@@ -172,13 +172,15 @@ export async function processInput(textInput:string) {
         }
         return
     }
+    let content = await standard_complete(resStr)
     try {
-        let content = await standard_complete(resStr)
         if (content[0].tool_text !== undefined) {
             console.log(content[0].tool_text)
         } else {
             console.log(content[0].text)
         }
-    } catch (error) {}
+    } catch (error) {
+        console.log(content)
+    }
     return false
 }
