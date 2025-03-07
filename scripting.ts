@@ -1,5 +1,5 @@
 
-import { debug, pluginsPath } from "./common";
+import { currentUsageMode, debug, pluginsPath, USAGE_PIPE } from "./common";
 
 
 async function loadJsScript(file_path: string) {
@@ -11,7 +11,9 @@ async function loadJsScript(file_path: string) {
 
 export async function loadTool(toolPath: string): Promise<any> {
     let filePath = `${pluginsPath}/${toolPath}`
-    console.log("Loading Tool: ", filePath, "\n")
+    if (currentUsageMode != USAGE_PIPE) {
+        console.log("Loading Tool: ", filePath, "\n")
+    }
     let scriptContent = await loadJsScript(filePath)
 
     const backing:any = {}

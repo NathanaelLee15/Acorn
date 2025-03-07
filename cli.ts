@@ -5,12 +5,11 @@ import { loadUserProfile } from "./profiles"
 export const CLI_VERSION = 0.1
 
 export async function cli_main(targetDir:string=".", interactiveMode:boolean=true, promptText:string=""): Promise<string> {
-    console.log("Running CLI.")
-
     if (! interactiveMode) {
         await processInput(promptText)
         return ""
     }
+    console.log("Running CLI.")
 
     let running = true
     while (running) {

@@ -1,6 +1,7 @@
 
 import { setup } from "./boot"
 import { cli_main } from "./cli"
+import { currentUsageMode, debug, setUsageMode, USAGE_NONE, USAGE_PIPE } from "./common"
 import { server_main } from "./server"
 
 
@@ -56,7 +57,7 @@ async function main() {
             let flag = args[args.length-2]
             autoPrompt = args[args.length-1]
 
-            console.log("Trying Auto Mode", targetDir, flag)
+            // console.log("Trying Auto Mode", targetDir, flag)
             if (flag == "-a"    || flag == "-A" || 
                 flag == "-auto" || flag == "-Auto"
             ) {
@@ -67,14 +68,27 @@ async function main() {
             }
         }
     }
-    console.log("MODE: ", mode)
+
     if (mode == 0) {
-        console.log("Invalid Mode, something went wrong.")
+        if (currentUsageMode != USAGE_PIPE) {
+            console.log("Invalid Mode, something went wrong.")
+        }
         return
     }
-
+    
+    if (mode == MODE_AUTO && autoPrompt !== null) {
+        setUsageMode(USAGE_PIPE)
+    } else {
+        setUsageMode(USAGE_NONE)
+    }
+    
     let res = null;
     await setup(targetDir)
+
+    if (debug || currentUsageMode != USAGE_PIPE) {
+        console.log("MODE: ", mode, currentUsageMode)
+    }
+
     if (mode <= MODE_TARGET) {
         res = await cli_main(targetDir)
     }
@@ -84,7 +98,10 @@ async function main() {
     else if (mode == MODE_AUTO && autoPrompt !== null) {
         res = await cli_main(targetDir, false, autoPrompt)
     }
-    console.log("Shutting Down...\nResult: ", res)
+    
+    if (mode != MODE_AUTO) {
+        console.log("Shutting Down...\nResult: ", res)
+    }
 }
 
 main()
