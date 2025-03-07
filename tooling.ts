@@ -72,10 +72,10 @@ export async function standard_complete(line:string, useTools=true): Promise<any
                         if (currentUsageMode != USAGE_PIPE) {
                             console.log("TOOL-OUTPUT:\n", res)
                         }
-                        return [messageBlock.text, res]
+                        return [{text:messageBlock.text, tool_text:res}]
                     }
                 }
-                return messageBlock.text
+                return [{text:messageBlock.text, tool_text:""}]
             }
         } catch (error) {
             console.error(error)   
