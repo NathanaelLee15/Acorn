@@ -46,7 +46,7 @@ const possibleCmdWords: string[][] = [
 const allCmds: any = {
     101: {
         callback: (line:any) => {
-            console.log("🔥🔥🔥")
+            console.log("Hello Example!")
         }
     }
 }
@@ -172,13 +172,13 @@ export async function processInput(textInput:string) {
         }
         return
     }
-    let response = await standard_complete(resStr)
-    if (currentUsageMode == USAGE_PIPE) {
-        if (typeof(response) === typeof([])) {
-            console.log(response[1])
+    try {
+        let content = await standard_complete(resStr)
+        if (content[0].tool_text !== undefined) {
+            console.log(content[0].tool_text)
         } else {
-            console.log(response)
+            console.log(content[0].text)
         }
-    }
+    } catch (error) {}
     return false
 }
