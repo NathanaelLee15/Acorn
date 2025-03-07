@@ -1,4 +1,13 @@
 
+export const USAGE_NONE     = "none"
+export const USAGE_DEBUG    = "debug"
+export const USAGE_PIPE     = "pipe"
+export let currentUsageMode:string=USAGE_NONE
+export function setUsageMode(mode:string) {
+    currentUsageMode = mode
+}
+
+
 const defaultPluginsPath = "C:/repos/acorn-plugins"
 const defaultMaxTokens = 512
 const defaultModel = "claude_haiku"
