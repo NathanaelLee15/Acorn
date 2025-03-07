@@ -1,6 +1,6 @@
 
 
-import { debug } from "./common"
+import { currentUsageMode, debug, USAGE_PIPE } from "./common"
 import { print_help, print_version } from "./help"
 import { quick_sys_call } from "./sys_wrap"
 import { print_tools, standard_complete } from "./tooling"
@@ -94,7 +94,9 @@ function try_print_cmd(lineStr:string): string {
 
 // try to run cmd string or number (targets allCmds)
 async function process_cmd(line:string|number): Promise<string> {
-    console.log("Processing Command: ", line)
+    if (currentUsageMode != USAGE_PIPE) {
+        console.log("Processing Command: ", line)
+    }
 
     try {
         let id = Number(line)
@@ -113,7 +115,7 @@ async function process_cmd(line:string|number): Promise<string> {
     }
 
     lineStr = lineStr.trimStart()
-    if (debug) {
+    if (debug && currentUsageMode != USAGE_PIPE) {
         console.log("Checking Line for Commands:\n", lineStr)
     }
 
@@ -143,15 +145,21 @@ export async function processInput(textInput:string) {
         res = textInput
     }
 
-    if (debug) {
+    if (debug && currentUsageMode != USAGE_PIPE) {
         console.log("ECHO:" , res)
     }
 
     if (await is_possible_cmd(res)) {
         let cmdRes = await process_cmd(res)
         // if the command: has not returned true/false or if empty
-        if (! (cmdRes == "true" || cmdRes == "false" || cmdRes.trim() == "")) {
-            console.log("Command Result:\n", cmdRes)
+        if (cmdRes != "false" && cmdRes != "true") {
+            if (currentUsageMode == USAGE_PIPE) {
+                if (cmdRes) {
+                    console.log(cmdRes)
+                }
+            } else {
+                console.log("Command Result:\n", cmdRes)
+            }
         }
         return
     } 
@@ -159,8 +167,18 @@ export async function processInput(textInput:string) {
     // let's not send garbage to the api
     let resStr = `${res}`
     if (resStr.length < minPhraseChars) {
-        console.log("Skipping Invoking Ai, line was too short:\n", resStr)
+        if (currentUsageMode != USAGE_PIPE) {
+            console.log("Skipping Invoking Ai, line was too short:\n", resStr)
+        }
         return
     }
-    await standard_complete(resStr)
+    let response = await standard_complete(resStr)
+    if (currentUsageMode == USAGE_PIPE) {
+        if (typeof(response) === typeof([])) {
+            console.log(response[1])
+        } else {
+            console.log(response)
+        }
+    }
+    return false
 }
