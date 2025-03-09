@@ -11,17 +11,20 @@ export async function server_main(targetDir:string="."): Promise<string> {
     // }
 
     const useForceRefresh = true;
-    
-    if (useForceRefresh || await Bun.file(`${targetDir}/index.php`).exists()) {
-        await quick_sys_call(`php ${targetDir}/index.php > ${targetDir}/index.html`)
-    }
-    if (await Bun.file(`${targetDir}/index.html`).exists()) {
-        console.log("-  index.html ... ✔")
-        // await quick_sys_call("bun ./index.html")
-    }
 
     const routes = {
-        "/": new Response(await Bun.file(`${targetDir}/index.html`).text()),
+        "/": await (async () => {
+            if (useForceRefresh || !(await Bun.file(`${targetDir}/index.php`).exists())) {
+                await quick_sys_call(`php ${targetDir}/index.php > ${targetDir}/index.html`)
+            }
+            if (await Bun.file(`${targetDir}/index.html`).exists()) {
+                console.log("-  index.html ... ✔")
+                // await quick_sys_call("bun ./index.html")
+                return new Response(await Bun.file(`${targetDir}/index.html`).text())
+            }
+            return new Response("ERR")
+        })(),
+
         // "/chat": new Response(await Bun.file(`${targetDir}/chat.html`).text()),
         // "/api/status": new Response("OK"),
         // "/users/:id": req => {
