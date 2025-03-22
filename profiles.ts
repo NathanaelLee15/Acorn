@@ -1,5 +1,5 @@
 
-import { pluginsPath } from "./common"
+import { currentUsageMode, pluginsPath, USAGE_PIPE } from "./common"
 import { tools } from "./tooling"
 
 
@@ -11,11 +11,15 @@ export async function loadExternalProfiles(dir:string=".", debug:boolean=false):
     let filePath = `${dir}/profiles.json`
     let fileObj = Bun.file(filePath)
     if (! (await fileObj.exists())) {
-        console.log("profiles.json does not exist!")
+        if (currentUsageMode != USAGE_PIPE) {
+            console.log("profiles.json does not exist!")
+        }
         return false
     }
 
-    console.log("Loading External Profiles: ", dir)
+    if (currentUsageMode != USAGE_PIPE) {
+        console.log("Loading External Profiles: ", dir)
+    }
     try {
         let text = await fileObj.text()
         let _profiles = JSON.parse(text)
@@ -51,7 +55,7 @@ export async function loadUserProfile(dir:string=".", debug:boolean=false): Prom
     let fileObj = Bun.file(filePath)
     
     let profile: any = {}
-    if (! (await fileObj.exists())) {
+    if (currentUsageMode != USAGE_PIPE && ! (await fileObj.exists())) {
         console.log("Profile not found!")
         console.log("Create profile:")
 
@@ -86,7 +90,9 @@ export async function loadUserProfile(dir:string=".", debug:boolean=false): Prom
         }
     }
 
-    console.log("Loading User Profile: ", filePath)
+    if (currentUsageMode != USAGE_PIPE) {
+        console.log("Loading User Profile: ", filePath)
+    }
     try {
         let fileObj2 = Bun.file(filePath)
         let text = await fileObj2.text()
@@ -94,11 +100,11 @@ export async function loadUserProfile(dir:string=".", debug:boolean=false): Prom
         let userName = profile.name
         
         for (let otherProfile of profile.deps) {
-            if (debug) {
+            if (debug && currentUsageMode != USAGE_PIPE) {
                 console.log("other:", otherProfile, profiles[otherProfile])
             }
             if (otherProfile.startsWith("-")) {
-                if (debug) {
+                if (debug && currentUsageMode != USAGE_PIPE) {
                     console.log("skipping   ", otherProfile)
                 }
                 continue
@@ -117,12 +123,12 @@ export async function loadUserProfile(dir:string=".", debug:boolean=false): Prom
 }
 
 async function bindProfile(profile: any, debug:boolean=false) {
-    if (debug) {
+    if (debug && currentUsageMode != USAGE_PIPE) {
         console.log("Binding Profile: ", profile)
     }
     for (let pluginName in profile) {
         if (pluginName.startsWith("-")) {
-            if (debug) {
+            if (debug && currentUsageMode != USAGE_PIPE) {
                 console.log("skipping   ", pluginName)
             }
             continue
@@ -139,7 +145,7 @@ async function loadPlugin(pluginName: string = "example", debug:boolean=false) {
     let filePath = `${pluginsPath}/${pluginName}/config.json`
     let text = await Bun.file(filePath).text()
     let obj = JSON.parse(text)
-    if (debug) {
+    if (debug && currentUsageMode != USAGE_PIPE) {
         console.log(obj)
         console.log()
     }
@@ -152,13 +158,13 @@ async function loadPlugin(pluginName: string = "example", debug:boolean=false) {
         let toolPath = tool.path;
         toolPath = toolPath.replace("{plugin_name}", pluginName)
         toolPath = toolPath.replace("{tool_name}", toolName)
-        if (debug) {
+        if (debug && currentUsageMode != USAGE_PIPE) {
             console.log(toolPath)
             console.log()
         }
         obj.tools[tc].path = toolPath
 
-        if (debug) {
+        if (debug && currentUsageMode != USAGE_PIPE) {
             console.log(tool.schema)
             console.log()
         }

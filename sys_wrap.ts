@@ -1,6 +1,9 @@
+import { currentUsageMode, USAGE_PIPE } from "./common"
 
 export async function quick_sys_call(cmdStr:string="echo hello!"): Promise<string> {
-    console.log("Quick System Call: ", cmdStr)
+    if (currentUsageMode != USAGE_PIPE) {
+        console.log("Quick System Call: ", cmdStr)
+    }
 
     let segments: any = []
     if (cmdStr.includes(" ")) {

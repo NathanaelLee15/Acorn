@@ -2,7 +2,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { loadTool } from './scripting';
 import { quick_sys_call } from './sys_wrap';
-import { currentMaxTokens, currentModel, debug, models } from './common';
+import { currentMaxTokens, currentModel, currentUsageMode, debug, models, USAGE_PIPE } from './common';
 
 
 const anthropic = new Anthropic()
@@ -11,12 +11,16 @@ export const tools: any = {}
 
 
 export async function standard_complete(line:string, useTools=true): Promise<any> {
-    console.log("\n# STANDARD_COMPLETE:\n")
+    if (currentUsageMode != USAGE_PIPE) {
+        console.log("\n# STANDARD_COMPLETE:\n")
+    }
     
     let allTools:any= []
     if (useTools) {
         for (let tool in tools) {
-            console.log("Attaching Tool: ", tool, "\n")
+            if (currentUsageMode != USAGE_PIPE) {
+                console.log("Attaching Tool: ", tool, "\n")
+            }
             allTools.push(tools[tool].schema)
         }
     }
@@ -41,7 +45,9 @@ export async function standard_complete(line:string, useTools=true): Promise<any
     }
 
     if (response === null) {
-        console.log("Failed to get response")
+        // if (currentUsageMode != USAGE_PIPE) {
+            console.log("Failed to get response")
+        // }
         return ""
     }
     
@@ -51,26 +57,32 @@ export async function standard_complete(line:string, useTools=true): Promise<any
                 let messageBlock : any = response.content[0]
                 let toolBlock : any = response.content[1]
                 
-                console.log(messageBlock.text, "\n")
+                if (currentUsageMode != USAGE_PIPE) {
+                    console.log(messageBlock.text, "\n")
+                }
                 
                 let tool = tools[toolBlock['name']]
                 if (tool !== undefined) {
-                    console.log("Using Tool: ", toolBlock['name'], " ", toolBlock['input'])
+                    if (currentUsageMode != USAGE_PIPE) {
+                        console.log("Using Tool: ", toolBlock['name'], " ", toolBlock['input'])
+                    }
                     let toolBacking = await loadTool(tool.path)
                     if (toolBacking.callback !== undefined) {
                         let res = await toolBacking.callback(standard_complete, quick_sys_call, toolBlock['input'])
-                        console.log("TOOL-OUTPUT:\n", res)
-                        return [messageBlock.text, res]
+                        if (currentUsageMode != USAGE_PIPE) {
+                            console.log("TOOL-OUTPUT:\n", res)
+                        }
+                        return [{text:messageBlock.text, tool_text:res}]
                     }
                 }
-                return messageBlock.text
+                return [{text:messageBlock.text, tool_text:""}]
             }
         } catch (error) {
             console.error(error)   
         }
     }
 
-    if (debug) {
+    if (debug && currentUsageMode != USAGE_PIPE) {
         console.log(response)
         console.log('')
         console.log(response.content)
