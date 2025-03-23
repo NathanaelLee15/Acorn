@@ -148,8 +148,15 @@ export async function processInput(textInput:string) {
     if (debug && currentUsageMode != USAGE_PIPE) {
         console.log("ECHO:" , res)
     }
+    
+    let useB64Mode = false
+    try {
+        if (String(res).trimEnd().endsWith('==')) {
+            useB64Mode = true
+        }
+    } catch (error) {}
 
-    if (await is_possible_cmd(res)) {
+    if (!useB64Mode && await is_possible_cmd(res)) {
         let cmdRes = await process_cmd(res)
         // if the command: has not returned true/false or if empty
         if (cmdRes != "false" && cmdRes != "true") {
@@ -166,6 +173,9 @@ export async function processInput(textInput:string) {
 
     // let's not send garbage to the api
     let resStr = `${res}`
+    if (useB64Mode) {
+        resStr = Buffer.from(resStr, 'base64').toString()
+    }
     if (resStr.length < minPhraseChars) {
         if (currentUsageMode != USAGE_PIPE) {
             console.log("Skipping Invoking Ai, line was too short:\n", resStr)
